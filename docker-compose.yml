@@ -1,12 +1,4 @@
 services:
-  mongo:
-    image: mongo:7
-    container_name: mongo
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
 
   backend:
     build: ./backend
@@ -15,10 +7,8 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/mydb
-      - JWT_SECRET=your_jwt_secret
-    depends_on:
-      - mongo
+      - MONGO_URI=mongodb+srv://romainzabethpro_db_user:<db_password>@clustertest.tqwc9he.mongodb.net/mydb?retryWrites=true&w=majority
+      - JWT_SECRET=58e4c771439e3c065ce6b6fc3cdcd748
 
   frontend:
     build: ./frontend
@@ -28,6 +18,3 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-
-volumes:
-  mongo-data:
