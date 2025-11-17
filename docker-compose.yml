@@ -16,5 +16,7 @@ services:
     restart: always
     ports:
       - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=https://backend-k9wz.onrender.com
     depends_on:
       - backend
