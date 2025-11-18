@@ -31,6 +31,9 @@ app.use(express.json());
 // ----------------------
 // Routes
 // ----------------------
+app.get('/api/health', (req, res) => {
+  res.status(200).send('OK');
+});
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 
