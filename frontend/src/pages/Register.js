@@ -5,7 +5,8 @@ import api from '../api';
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); // <-- ajouté
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(''); // <-- ajout
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,23 +14,30 @@ const Register = () => {
 
     // Vérification champs vides
     if (!username || !password) {
-      setError("Veuillez remplir tous les champs.");
+      setError("Please fill in all fields.");
+      setSuccess(""); // reset success
       return;
     }
 
     try {
       await api.post('/auth/register', { username, password });
       setError(""); // reset erreurs
-      navigate('/login');
+      setSuccess("Create account successfull ! Redirection..."); // <-- message de succès
+
+      // Petit délai pour laisser voir le message
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
     } catch (err) {
       console.error('Register failed', err);
 
       // Message d'erreur lisible
       const msg =
         err?.response?.data?.msg ||
-        "Impossible de créer le compte. Veuillez réessayer.";
+        "Register failed";
 
       setError(msg);
+      setSuccess(""); // reset success
     }
   };
 
@@ -39,6 +47,9 @@ const Register = () => {
 
       {/* Affichage visible de l'erreur */}
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      
+      {/* Affichage du succès */}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">

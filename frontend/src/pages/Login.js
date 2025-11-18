@@ -5,7 +5,8 @@ import api from "../api";
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // <-- ajout
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // <-- ajout
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,7 +14,8 @@ const Login = ({ onLogin }) => {
 
     // Vérification champs vides
     if (!username || !password) {
-      setError("Veuillez remplir tous les champs.");
+      setError("Please fill in all fields.");
+      setSuccess(""); // reset success
       return;
     }
 
@@ -21,13 +23,19 @@ const Login = ({ onLogin }) => {
       const res = await api.post("/auth/login", { username, password });
       localStorage.setItem("token", res.data.token);
 
-      setError(""); // reset erreur si ok
+      setError(""); // reset erreur
+      setSuccess("Login successfull ! Redirection..."); // <-- message de succès
 
       if (onLogin) onLogin();
-      navigate("/tasks");
+      
+      // Petit délai pour laisser voir le message
+      setTimeout(() => {
+        navigate("/tasks");
+      }, 800);
     } catch (err) {
       console.error("Login failed", err);
-      setError("Identifiants incorrects."); // <-- message visible
+      setError("Incorrect credentials.");
+      setSuccess(""); // reset success
     }
   };
 
@@ -37,6 +45,9 @@ const Login = ({ onLogin }) => {
 
       {/* Affichage de l'erreur */}
       {error && <p style={{ color: "red" }}>{error}</p>}
+      
+      {/* Affichage du succès */}
+      {success && <p style={{ color: "green" }}>{success}</p>}
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
