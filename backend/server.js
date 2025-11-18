@@ -10,7 +10,7 @@ const app = express();
 // ----------------------
 // CORS configuration
 // ----------------------
-const allowedOrigins = ['http://localhost:3000', 'https://frontend-dlzk.onrender.com'];
+const allowedOrigins = ['http://localhost:3000', 'https://frontend-dlzk.onrender.com', 'https://test-exam.nopon-market.fr'];
 app.use(
   cors({
     origin: function (origin, callback) {
