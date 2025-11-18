@@ -14,6 +14,7 @@
 - Add Task form did not return an error when fields were empty. ✅ Fixed (error message displayed)
 - Login and Register forms did not return errors when fields were empty. ✅ Fixed (error messages displayed)
 - Logout did not redirect to Login page. ✅ Fixed
+- Add Task form now limits title to 60 characters to prevent layout break and displays error when max length is reached. ✅ Fixed
 
 ---
 
