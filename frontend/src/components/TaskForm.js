@@ -44,7 +44,11 @@ const TaskForm = ({ addTask }) => {
           placeholder="Add a task..."
           value={title}
           maxLength={60}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            value.length >= 60 ? setError("Maximum length (60 characters) reached.") : setError("");
+            setTitle(value);
+          }}
         />
         <button type="submit" className="btn" style={{ marginTop: "10px" }}>
           Add Task
