@@ -43,6 +43,7 @@ const TaskForm = ({ addTask }) => {
           type="text"
           placeholder="Add a task..."
           value={title}
+          maxLength={60}
           onChange={(e) => setTitle(e.target.value)}
         />
         <button type="submit" className="btn" style={{ marginTop: "10px" }}>
