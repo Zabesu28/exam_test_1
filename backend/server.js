@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const logger = require('./utils/logger');
 
 connectDB();
 
@@ -27,6 +28,16 @@ app.use(
 // Middleware
 // ----------------------
 app.use(express.json());
+
+app.use((req, res, next) => {
+  logger.info({
+    method: req.method,
+    url: req.url,
+    ip: req.ip,
+    userAgent: req.get('User-Agent'),
+  });
+  next();
+});
 
 // ----------------------
 // Routes
