@@ -7,7 +7,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGO_URI=mongodb+srv://romainzabethpro_db_user:<db_password>@clustertest.tqwc9he.mongodb.net/mydb?retryWrites=true&w=majority
+      - MONGO_URI=mongodb+srv://romainzabethpro_db_user:QEW6rZQ6JvIHPFVf@clustertest.tqwc9he.mongodb.net/mydb?retryWrites=true&w=majority
       - JWT_SECRET=58e4c771439e3c065ce6b6fc3cdcd748
 
   frontend:
@@ -17,6 +17,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_API_URL=https://backend-k9wz.onrender.com
+      - REACT_APP_API_URL=http://localhost:5000
     depends_on:
       - backend
