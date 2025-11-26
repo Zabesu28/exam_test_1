@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PublicRoute from "./components/PublicRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // La page n'a pas de style cohérent
 // => ajouter un fichier CSS pour gérer les styles de la page
@@ -44,9 +46,35 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/tasks" element={<Tasks />} />
+
+            {/* Routes accessibles UNIQUEMENT si NON connecté */}
+            <Route
+              path="/login"
+              element={
+                <PublicRoute isAuthenticated={isAuthenticated}>
+                  <Login onLogin={handleLogin} />
+                </PublicRoute>
+              }
+            />
+
+            <Route
+              path="/register"
+              element={
+                <PublicRoute isAuthenticated={isAuthenticated}>
+                  <Register />
+                </PublicRoute>
+              }
+            />
+
+            {/* Route PROTÉGÉE */}
+            <Route
+              path="/tasks"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Tasks />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </main>
         <Footer />
